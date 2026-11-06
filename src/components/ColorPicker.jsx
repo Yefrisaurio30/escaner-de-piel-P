@@ -36,7 +36,7 @@ export default function ColorPicker({ photo, points, onMove, onSelectActive, onS
     const pt = points[which]
     const x = pt.x * canvas.width
     const y = pt.y * canvas.height
-    const radius = Math.max(6, Math.round(Math.min(canvas.width, canvas.height) * 0.032))
+    const radius = Math.max(8, Math.round(Math.min(canvas.width, canvas.height) * 0.05))
     const ctx = canvas.getContext('2d')
     const color = sampleRegion(ctx, x, y, radius, canvas.width, canvas.height)
     if (color) onSample(which, color)
