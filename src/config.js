@@ -4,11 +4,14 @@ export const BRAND = {
   catalogBrand: 'Kevin y Coco',
 }
 
-// Use VITE_WHATSAPP_NUMBER in your .env file (digits only, country code included).
-// Fallback is a clearly placeholder number.
+// Default destination for the WhatsApp consultation button (digits only,
+// country code included). Override locally or per-deployment with
+// VITE_WHATSAPP_NUMBER in your .env file.
+const DEFAULT_WHATSAPP_NUMBER = '573138636590'
+
 export const WHATSAPP_NUMBER =
-  import.meta.env.VITE_WHATSAPP_NUMBER
-    ? import.meta.env.VITE_WHATSAPP_NUMBER.toString().replace(/\D/g, '')
-    : ''
+  (import.meta.env.VITE_WHATSAPP_NUMBER || DEFAULT_WHATSAPP_NUMBER)
+    .toString()
+    .replace(/\D/g, '')
 
 export const DEMO_PHOTO_ENABLED = true
