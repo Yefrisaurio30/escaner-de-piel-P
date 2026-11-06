@@ -1,142 +1,181 @@
-function Character({ x, y, skin = '#D9A97E', hair = '#6B4F8F', shirt = '#D82B50', scale = 1, flip = false }) {
+function Character({
+  x,
+  y,
+  skin = '#E9C6A5',
+  hair = '#6B4F8F',
+  shirt = '#D82B50',
+  scale = 1,
+  flip = false,
+  headphones = false,
+  glasses = false,
+}) {
   const t = `translate(${x} ${y}) scale(${flip ? -1 : 1} ${scale})`
   return (
     <g transform={t}>
       {/* body */}
-      <ellipse cx="0" cy="52" rx="34" ry="44" fill={shirt} opacity="0.95" />
-      <ellipse cx="0" cy="40" rx="26" ry="10" fill="#fff" opacity="0.18" />
+      <path d="M-34 96 Q0 58 34 96 L34 120 L-34 120 Z" fill={shirt} opacity="0.95" />
+      <ellipse cx="0" cy="70" rx="22" ry="14" fill={shirt} opacity="0.9" />
       {/* neck */}
-      <rect x="-7" y="8" width="14" height="16" rx="6" fill={skin} />
+      <rect x="-8" y="36" width="16" height="22" rx="8" fill={skin} />
       {/* head */}
-      <circle cx="0" cy="-12" r="30" fill={skin} />
+      <path d="M-32 8 Q-38 -26 -22 -42 Q0 -54 22 -42 Q38 -26 32 8 Q20 34 0 34 Q-20 34 -32 8 Z" fill={skin} />
       {/* hair */}
-      <path d="M-30 -18 Q-26 -52 0 -54 Q26 -52 30 -18 Q22 -30 0 -32 Q-22 -30 -30 -18 Z" fill={hair} />
-      <path d="M-26 -14 Q-30 -2  -22 6" stroke={hair} strokeWidth="6" fill="none" strokeLinecap="round" />
-      <path d="M26 -14 Q30 -2 22 6" stroke={hair} strokeWidth="6" fill="none" strokeLinecap="round" />
+      <path d="M-34 -20 Q-40 -52 0 -60 Q40 -52 34 -20 Q28 -46 0 -46 Q-28 -46 -34 -20 Z" fill={hair} />
+      <path d="M-34 -18 Q-32 12 -30 18 L-38 18 Q-40 -4 -34 -18 Z" fill={hair} />
+      <path d="M34 -18 Q32 12 30 18 L38 18 Q40 -4 34 -18 Z" fill={hair} />
+      {headphones && (
+        <g stroke={hair} strokeWidth="5" fill="none">
+          <path d="M-34 -22 Q-40 4 -34 22" />
+          <path d="M34 -22 Q40 4 34 22" />
+        </g>
+      )}
+      {/* ears */}
+      <ellipse cx="-33" cy="6" rx="4" ry="6" fill={skin} />
+      <ellipse cx="33" cy="6" rx="4" ry="6" fill={skin} />
       {/* eyes */}
-      <circle cx="-10" cy="-14" r="3.2" fill="#2B2323" />
-      <circle cx="10" cy="-14" r="3.2" fill="#2B2323" />
-      <circle cx="-8.5" cy="-15.5" r="1.1" fill="#fff" />
-      <circle cx="11.5" cy="-15.5" r="1.1" fill="#fff" />
+      <ellipse cx="-11" cy="4" rx="4" ry="4.5" fill="#2B2323" />
+      <ellipse cx="11" cy="4" rx="4" ry="4.5" fill="#2B2323" />
+      <circle cx="-9.5" cy="2.5" r="1.3" fill="#fff" />
+      <circle cx="12.5" cy="2.5" r="1.3" fill="#fff" />
+      {glasses && (
+        <g stroke="#2B2323" strokeWidth="1.8" fill="none">
+          <circle cx="-11" cy="4" r="8" />
+          <circle cx="11" cy="4" r="8" />
+          <path d="M-3 4 L3 4" />
+        </g>
+      )}
+      {/* brows */}
+      <path d="M-17 -6 Q-11 -9 -5 -6" stroke="#2B2323" strokeWidth="1.8" fill="none" strokeLinecap="round" />
+      <path d="M5 -6 Q11 -9 17 -6" stroke="#2B2323" strokeWidth="1.8" fill="none" strokeLinecap="round" />
       {/* blush */}
-      <ellipse cx="-16" cy="-6" rx="5" ry="3" fill="#D82B50" opacity="0.22" />
-      <ellipse cx="16" cy="-6" rx="5" ry="3" fill="#D82B50" opacity="0.22" />
+      <ellipse cx="-18" cy="14" rx="5" ry="3" fill="#D82B50" opacity="0.22" />
+      <ellipse cx="18" cy="14" rx="5" ry="3" fill="#D82B50" opacity="0.22" />
       {/* smile */}
-      <path d="M-9 -2 Q0 6 9 -2" stroke="#2B2323" strokeWidth="2" fill="none" strokeLinecap="round" />
-      {/* headphones-ish arc */}
-      <path d="M-30 -20 Q0 -58 30 -20" stroke={hair} strokeWidth="3" fill="none" opacity="0.35" />
+      <path d="M-7 22 Q0 30 7 22" stroke="#2B2323" strokeWidth="2" fill="none" strokeLinecap="round" />
+    </g>
+  )
+}
+
+function Rainbow({ x = 200, y = 110, scale = 1 }) {
+  const t = `translate(${x} ${y}) scale(${scale})`
+  return (
+    <g transform={t} opacity="0.28">
+      <path d="M-110 0 A110 110 0 0 1 110 0" stroke="#D82B50" strokeWidth="10" fill="none" strokeLinecap="round" />
+      <path d="M-88 0 A88 88 0 0 1 88 0" stroke="#B7A6E8" strokeWidth="10" fill="none" strokeLinecap="round" />
+      <path d="M-66 0 A66 66 0 0 1 66 0" stroke="#B9D8F2" strokeWidth="10" fill="none" strokeLinecap="round" />
+      <path d="M-44 0 A44 44 0 0 1 44 0" stroke="#F6DDA7" strokeWidth="10" fill="none" strokeLinecap="round" />
+    </g>
+  )
+}
+
+function Sparkles({ points = [[40, 40], [340, 60], [60, 250], [330, 220]] }) {
+  return (
+    <g fill="#C22543" opacity="0.7">
+      {points.map(([x, y], i) => (
+        <path
+          key={i}
+          d={`M${x} ${y} l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3 z`}
+          opacity={0.5 + (i % 3) * 0.15}
+        />
+      ))}
     </g>
   )
 }
 
 export function HeroDuo({ className = '' }) {
   return (
-    <svg viewBox="0 0 360 260" className={className} role="img" aria-label="Ilustración Prisma Pop">
+    <svg viewBox="0 0 400 300" className={className} role="img" aria-label="Ilustración Prisma Pop">
       <defs>
-        <radialGradient id="blob1" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#F8DDE2" />
-          <stop offset="100%" stopColor="#F8DDE2" stopOpacity="0" />
-        </radialGradient>
-        <radialGradient id="blob2" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#EDE2F7" />
-          <stop offset="100%" stopColor="#EDE2F7" stopOpacity="0" />
-        </radialGradient>
-      </defs>
-      <ellipse cx="70" cy="130" rx="110" ry="100" fill="url(#blob1)" />
-      <ellipse cx="290" cy="130" rx="110" ry="100" fill="url(#blob2)" />
-      <path d="M40 60 Q180 -10 320 60" stroke="#D82B50" strokeWidth="2" fill="none" opacity="0.25" strokeDasharray="6 6" />
-      <Character x={105} y={150} skin="#D9A97E" hair="#6B4F8F" shirt="#D82B50" />
-      <Character x={250} y={155} skin="#BD8355" hair="#B7A6E8" shirt="#B7A6E8" flip />
-      {/* sparkles */}
-      <g fill="#C22543" opacity="0.7">
-        <path d="M60 40 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3 z" />
-        <path d="M300 50 l2.5 6 6 2.5 -6 2.5 -2.5 6 -2.5 -6 -6 -2.5 6 -2.5 z" fill="#B7A6E8" />
-        <path d="M180 25 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2 z" fill="#F6DDA7" />
-      </g>
-      {/* floating prism */}
-      <g transform="translate(180 210)">
-        <polygon points="-18,0 18,0 0,30" fill="url(#prism)" opacity="0.85" />
-      </g>
-      <defs>
-        <linearGradient id="prism" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#D82B50" />
-          <stop offset="1" stopColor="#B7A6E8" />
+        <linearGradient id="hd-bg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#FDEDF0" />
+          <stop offset="1" stopColor="#FBF3EE" />
         </linearGradient>
+        <radialGradient id="hd-blob1" cx="30%" cy="40%" r="40%">
+          <stop offset="0" stopColor="#F8DDE2" />
+          <stop offset="1" stopColor="#F8DDE2" stopOpacity="0" />
+        </radialGradient>
+        <radialGradient id="hd-blob2" cx="70%" cy="40%" r="40%">
+          <stop offset="0" stopColor="#EDE2F7" />
+          <stop offset="1" stopColor="#EDE2F7" stopOpacity="0" />
+        </radialGradient>
       </defs>
+      <rect width="400" height="300" rx="32" fill="url(#hd-bg)" />
+      <ellipse cx="120" cy="150" rx="130" ry="110" fill="url(#hd-blob1)" />
+      <ellipse cx="300" cy="150" rx="130" ry="110" fill="url(#hd-blob2)" />
+      <Rainbow x={200} y={120} scale={1.1} />
+      <Character x={135} y={205} skin="#E9C6A5" hair="#6B4F8F" shirt="#D82B50" headphones glasses />
+      <Character x={265} y={205} skin="#BD8355" hair="#B9D8F2" shirt="#B7A6E8" flip />
+      <Sparkles />
     </svg>
   )
 }
 
 export function HugDuo({ className = '' }) {
   return (
-    <svg viewBox="0 0 360 260" className={className} role="img" aria-label="Ilustración abrazo">
-      <ellipse cx="180" cy="140" rx="150" ry="110" fill="#F8E3E6" opacity="0.7" />
-      <Character x={150} y={155} skin="#D9A97E" hair="#6B4F8F" shirt="#C22543" />
-      <Character x={215} y={155} skin="#E9C6A5" hair="#B9D8F2" shirt="#B7A6E8" flip />
-      <path d="M140 170 Q180 200 225 170" stroke="#C22543" strokeWidth="2" fill="none" opacity="0.4" />
-      <g fill="#D82B50" opacity="0.7">
-        <path d="M90 60 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3 z" />
-        <path d="M270 70 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3 z" fill="#B7A6E8" />
-      </g>
+    <svg viewBox="0 0 400 300" className={className} role="img" aria-label="Ilustración abraza">
+      <defs>
+        <linearGradient id="hug-bg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#FDEDF0" />
+          <stop offset="1" stopColor="#FBF3EE" />
+        </linearGradient>
+      </defs>
+      <rect width="400" height="300" rx="32" fill="url(#hug-bg)" />
+      <path d="M0 300 Q200 160 400 300 Z" fill="#F8DDE2" opacity="0.6" />
+      <Character x={160} y={210} skin="#E9C6A5" hair="#6B4F8F" shirt="#C22543" />
+      <Character x={240} y={210} skin="#D9A97E" hair="#B9D8F2" shirt="#B7A6E8" flip />
+      <path d="M150 265 Q200 285 260 265" stroke="#C22543" strokeWidth="3" fill="none" strokeLinecap="round" opacity="0.35" />
+      <Sparkles points={[[70,60],[340,80],[120,240],[280,240]]} />
     </svg>
   )
 }
 
 export function ScanDuo({ className = '' }) {
   return (
-    <svg viewBox="0 0 360 260" className={className} role="img" aria-label="Ilustración escaneo">
-      <rect x="40" y="30" width="280" height="200" rx="28" fill="#fff" stroke="#EADCD6" strokeWidth="2" />
-      <rect x="56" y="46" width="248" height="168" rx="20" fill="#F7ECE3" />
-      <Character x={135} y={150} skin="#D9A97E" hair="#6B4F8F" shirt="#D82B50" scale={0.85} />
-      <Character x={225} y={150} skin="#BD8355" hair="#B7A6E8" shirt="#B7A6E8" scale={0.85} flip />
-      {/* camera frame guides */}
-      <rect x="95" y="70" width="70" height="70" rx="12" fill="none" stroke="#C22543" strokeWidth="2" strokeDasharray="6 4" opacity="0.7" />
-      <rect x="195" y="70" width="70" height="70" rx="12" fill="none" stroke="#C22543" strokeWidth="2" strokeDasharray="6 4" opacity="0.7" />
-      <circle cx="130" cy="105" r="6" fill="#C22543" />
-      <circle cx="230" cy="105" r="6" fill="#C22543" />
-      {/* camera icon */}
-      <g transform="translate(180 225)">
-        <rect x="-16" y="-10" width="32" height="20" rx="6" fill="#C22543" />
+    <svg viewBox="0 0 400 300" className={className} role="img" aria-label="Ilustración escaneo">
+      <defs>
+        <linearGradient id="scan-bg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#FDEDF0" />
+          <stop offset="1" stopColor="#FBF3EE" />
+        </linearGradient>
+      </defs>
+      <rect width="400" height="300" rx="32" fill="url(#scan-bg)" />
+      <Character x={150} y={220} skin="#E9C6A5" hair="#6B4F8F" shirt="#D82B50" headphones scale={0.9} glasses />
+      <Character x={250} y={220} skin="#BD8355" hair="#B9D8F2" shirt="#B7A6E8" scale={0.9} flip />
+      <g transform="translate(0 0)">
+        <rect x="110" y="120" width="80" height="80" rx="18" fill="none" stroke="#C22543" strokeWidth="2" strokeDasharray="6 4" opacity="0.65" />
+        <rect x="222" y="120" width="80" height="80" rx="18" fill="none" stroke="#C22543" strokeWidth="2" strokeDasharray="6 4" opacity="0.65" />
+        <circle cx="150" cy="160" r="5" fill="#C22543" />
+        <circle cx="262" cy="160" r="5" fill="#C22543" />
+      </g>
+      <g transform="translate(200 280)">
+        <rect x="-22" y="-10" width="44" height="20" rx="8" fill="#C22543" />
         <circle cx="0" cy="0" r="6" fill="#fff" />
         <circle cx="0" cy="0" r="3" fill="#C22543" />
       </g>
+      <Sparkles points={[[50,60],[350,70],[70,260],[340,250]]} />
     </svg>
   )
 }
 
 export function MatchDuo({ className = '' }) {
   return (
-    <svg viewBox="0 0 360 260" className={className} role="img" aria-label="Ilustración match">
-      <ellipse cx="180" cy="130" rx="150" ry="100" fill="#F8E3E6" opacity="0.6" />
-      <Character x={120} y={160} skin="#D9A97E" hair="#6B4F8F" shirt="#D82B50" />
-      <Character x={240} y={160} skin="#BD8355" hair="#B7A6E8" shirt="#B7A6E8" flip />
-      {/* heart */}
-      <g transform="translate(180 95)">
-        <path
-          d="M0 12 C-20 -10 -40 4 -20 26 L0 44 L20 26 C40 4 20 -10 0 12 Z"
-          fill="#D82B50"
-          opacity="0.9"
-        />
-      </g>
-      <g fill="#F6DDA7" opacity="0.8">
-        <path d="M70 50 l2.5 6 6 2.5 -6 2.5 -2.5 6 -2.5 -6 -6 -2.5 6 -2.5 z" />
-        <path d="M290 55 l2.5 6 6 2.5 -6 2.5 -2.5 6 -2.5 -6 -6 -2.5 6 -2.5 z" fill="#B7A6E8" />
-      </g>
-    </svg>
-  )
-}
-
-export function PrismMark({ className = '' }) {
-  return (
-    <svg viewBox="0 0 64 64" className={className} aria-hidden="true">
+    <svg viewBox="0 0 400 300" className={className} role="img" aria-label="Ilustración match">
       <defs>
-        <linearGradient id="pm" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#D82B50" />
-          <stop offset="1" stopColor="#B7A6E8" />
+        <linearGradient id="match-bg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#FDEDF0" />
+          <stop offset="1" stopColor="#FBF3EE" />
         </linearGradient>
       </defs>
-      <polygon points="24,8 40,8 32,40" fill="url(#pm)" />
-      <path d="M8 52 Q32 20 56 52" stroke="url(#pm)" strokeWidth="4" fill="none" strokeLinecap="round" />
+      <rect width="400" height="300" rx="32" fill="url(#match-bg)" />
+      <Rainbow x={200} y={130} scale={1.2} />
+      <Character x={140} y={210} skin="#E9C6A5" hair="#6B4F8F" shirt="#D82B50" />
+      <Character x={260} y={210} skin="#BD8355" hair="#B9D8F2" shirt="#B7A6E8" flip />
+      <path
+        d="M200 130 C180 110 160 125 190 150 L200 162 L210 150 C240 125 220 110 200 130 Z"
+        fill="#D82B50"
+        opacity="0.9"
+      />
+      <Sparkles points={[[70,50],[330,60],[90,250],[320,240]]} />
     </svg>
   )
 }

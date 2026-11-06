@@ -5,7 +5,8 @@ import Button from '../components/ui/Button'
 import Card from '../components/ui/Card'
 import ColorPicker from '../components/ColorPicker'
 import { recommend } from '../lib/recommend'
-import { RotateCcw, ScanLine } from 'lucide-react'
+import { luminance, lightQuality } from '../lib/color'
+import { RotateCcw, ScanLine, Sparkles } from 'lucide-react'
 
 export default function ScanStep() {
   const { state, dispatch, goTo } = useApp()
@@ -19,6 +20,11 @@ export default function ScanStep() {
   if (!photo) return null
 
   const ready = Boolean(points.cheek.color && points.forehead.color)
+  const cheek = points.cheek.color
+  const forehead = points.forehead.color
+  const lum = cheek ? luminance(cheek) : forehead ? luminance(forehead) : 0
+  const filled = Math.round((lum / 255) * 8)
+  const quality = cheek || forehead ? lightQuality(cheek || forehead) : 'Sin muestra'
 
   async function handleAnalyze() {
     setError('')
@@ -27,7 +33,6 @@ export default function ScanStep() {
       return
     }
     setAnalyzing(true)
-    // small delay for the scanning animation + perceived processing
     await new Promise((r) => setTimeout(r, 1300))
     const result = recommend({ quiz: state.quiz, samples: points })
     if (!result) {
@@ -46,11 +51,11 @@ export default function ScanStep() {
   }
 
   return (
-    <div className="space-y-5">
+    <div className="mx-auto max-w-xl space-y-6">
       <StepHeader
-        eyebrow="Tu foto"
+        eyebrow="Una foto, dos pistas"
         title="Aquí empieza tu match."
-        subtitle="Ajustá los puntos sobre mejilla y frente. La lectura se actualiza sola."
+        subtitle="Marca una zona de piel en la mejilla y otra en la frente. Evita brillos, sombras fuertes y labios."
       />
 
       <div className="relative">
@@ -61,6 +66,9 @@ export default function ScanStep() {
           onSelectActive={(which) => dispatch({ type: 'SET_ACTIVE_POINT', which })}
           onSample={(which, color) => dispatch({ type: 'SET_POINT_COLOR', which, color })}
         />
+        <div className="absolute top-3 left-3 rounded-full bg-white/90 backdrop-blur px-3 py-1.5 text-[11px] font-semibold text-rose shadow-sm">
+          Guía ilustrativa · no es una medición real
+        </div>
         {analyzing && (
           <div className="absolute inset-0 z-20 rounded-[1.75rem] overflow-hidden bg-ink/30 backdrop-blur-sm grid place-items-center">
             <div className="relative w-full h-full">
@@ -77,6 +85,24 @@ export default function ScanStep() {
         )}
       </div>
 
+      <div className="rounded-[1.5rem] border border-line bg-white p-4">
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-[13px] font-semibold text-ink">Luz para la muestra</span>
+          <span className="text-[12px] font-semibold text-rose">{quality}</span>
+        </div>
+        <div className="flex gap-1">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <span
+              key={i}
+              className={`h-2 flex-1 rounded-full transition-colors ${
+                i < filled ? 'bg-rose' : 'bg-line'
+              }`}
+            />
+          ))}
+        </div>
+        <p className="mt-2 text-[12px] text-muted">Medidor ilustrativo; no es una medición real.</p>
+      </div>
+
       {error && (
         <Card tone="blush" className="p-4">
           <p className="text-[13px] text-ink">{error}</p>
@@ -87,24 +113,14 @@ export default function ScanStep() {
         <Button variant="secondary" onClick={handleRepeat}>
           <RotateCcw className="h-4 w-4" /> Repetir foto
         </Button>
-        <div className="flex items-center gap-3">
-          <span className="text-xs text-muted hidden sm:inline">
-            {ready ? 'Muestra lista para analizar.' : 'Faltan lecturas.'}
-          </span>
-          <Button size="lg" loading={analyzing} disabled={!ready} onClick={handleAnalyze}>
-            Analizar
-          </Button>
-        </div>
+        <Button size="lg" loading={analyzing} disabled={!ready} onClick={handleAnalyze}>
+          <Sparkles className="h-4 w-4" /> Analizar
+        </Button>
       </div>
 
-      <Card tone="soft" className="p-4">
-        <p className="text-xs font-semibold text-rose mb-1">Consejos para una mejor lectura</p>
-        <ul className="text-[13px] text-ink-soft space-y-1 leading-snug">
-          <li>• Elegí zonas sin sombra ni brillo (evitá la nariz).</li>
-          <li>• Si mejilla y frente dan colores muy distintos, probá otra foto.</li>
-          <li>• La luz natural mejora mucho la precisión.</li>
-        </ul>
-      </Card>
+      <p className="text-[12px] text-muted">
+        La cámara solo estima el tono. La iluminación y el dispositivo pueden afectar la comparación.
+      </p>
     </div>
   )
 }

@@ -1,32 +1,43 @@
 import { BRAND, WHATSAPP_NUMBER } from '../config'
+import { CATALOG } from '../data/catalog'
 
 export function undertoneLabel(tone) {
   return tone === 'cool' ? 'Frío' : tone === 'warm' ? 'Cálido' : 'Neutro'
 }
 
 export function buildMessage({ quiz, result, SKIN_LABEL, COVERAGE_LABEL }) {
-  const skin = SKIN_LABEL[quiz.skin]
-  const coverage = COVERAGE_LABEL[quiz.coverage]
-  const undertone = undertoneLabel(result.undertone)
-  const refs = result.all
-    ? result.all.map((p) => p.reference).join(', ')
-    : 'Matte B1–B4 y Glow 03–05'
+  const skin = SKIN_LABEL[quiz.skin]?.toLowerCase()
+  const coverage = COVERAGE_LABEL[quiz.coverage]?.toLowerCase()
+  const undertone = undertoneLabel(result.undertone).toLowerCase()
+  const tone = result.tone?.toLowerCase()
+  const primary = result.primary
+    ? `${result.primary.line} ${result.primary.reference}`
+    : 'Matte B2'
+  const refs = [
+    ...CATALOG.filter((p) => p.line === 'Matte').map((p) => p.reference),
+    ...CATALOG.filter((p) => p.line === 'Glow').map((p) => p.reference),
+  ]
+    .map((r, i) => (i === 0 ? r : r))
+    .join(', ')
 
   return [
     `¡Hola, ${BRAND.name}! Quisiera orientación sobre las bases ${BRAND.catalogBrand}.`,
     '',
-    `Mi guía estimada: tono ${result.tone.toLowerCase()}, subtomo ${undertone.toLowerCase()}; piel ${skin.toLowerCase()} y cobertura ${coverage.toLowerCase()}.`,
+    `Mi guía estimada: tono ${tone}, subtono ${undertone}; piel ${skin} y cobertura ${coverage}.`,
     '',
-    `Referencia de partida sugerida: ${result.primary.line} · ${result.primary.reference}.`,
-    `Otras referencias para comparar: ${refs}.`,
+    `Vi ${primary} como referencia de ejemplo, pendiente de confirmar en mi piel.`,
     '',
-    '¿Qué tono podría probar primero y qué disponibilidad tienen?',
+    `También quiero conocer las opciones Matte y Glow: ${refs}.`,
     '',
-    '— Enviado desde Prisma Pop (orientación visual, a confirmar sobre mi piel).',
+    '¿Qué tono podría probar y qué referencias tienen disponibles?',
   ].join('\n')
 }
 
 export function buildWhatsAppUrl(message) {
   const text = encodeURIComponent(message)
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`
+  if (WHATSAPP_NUMBER) {
+    return `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`
+  }
+  // Sin número configurado: WhatsApp permite elegir el contacto al abrir.
+  return `https://api.whatsapp.com/send?text=${text}`
 }

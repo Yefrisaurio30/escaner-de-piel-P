@@ -1,4 +1,4 @@
-import { useMemo, useEffect } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import { useApp } from '../context/AppContext'
 import StepHeader from '../components/StepHeader'
 import Button from '../components/ui/Button'
@@ -7,11 +7,13 @@ import ProductCard from '../components/ProductCard'
 import { LINE_META } from '../data/catalog'
 import { SKIN_LABEL, COVERAGE_LABEL } from '../data/quiz'
 import { buildMessage, buildWhatsAppUrl } from '../lib/whatsapp'
-import { MessageCircle, Edit3, RotateCcw } from 'lucide-react'
+import { MessageCircle, Lightbulb, Info } from 'lucide-react'
+import { HeroDuo } from '../components/illustrations/PopIllustrations'
 
 export default function CatalogStep() {
   const { state, goTo } = useApp()
   const result = state.result
+  const [tipsOpen, setTipsOpen] = useState(false)
 
   useEffect(() => {
     if (!result) goTo(5)
@@ -41,47 +43,49 @@ export default function CatalogStep() {
   }))
 
   return (
-    <div className="space-y-6">
+    <div className="mx-auto max-w-xl space-y-6">
+      <div className="rounded-[2rem] overflow-hidden bg-gradient-to-br from-blush to-cream border border-line/60 shadow-card">
+        <HeroDuo className="w-full h-auto" />
+        <p className="px-4 pb-3 text-[11px] text-muted text-center">
+          La cámara estima el tono en mejilla y frente · Confirma el color sobre tu piel
+        </p>
+      </div>
+
       <StepHeader
-        eyebrow="Tu selección"
+        eyebrow="Tu pequeño guardarropa de tonos"
         title="Hechos para ir contigo."
-        subtitle="Tu guía estimada y las referencias para comparar. El tono final se confirma sobre tu piel."
+        subtitle="Siete referencias del catálogo Kevin y Coco para explorar. Selección ilustrativa — confirma los tonos sobre tu piel antes de comprar."
       />
 
       <Card tone="soft" className="p-5">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <p className="text-xs font-semibold text-rose uppercase tracking-wider mb-2">Tu guía</p>
-            <div className="flex flex-wrap gap-2">
-              <span className="rounded-full bg-rose text-white px-3.5 py-1.5 text-sm font-semibold">
-                Tono: {result.tone}
-              </span>
-              <span className="rounded-full bg-white border border-line px-3.5 py-1.5 text-sm font-semibold text-ink">
-                Matiz: {result.undertone === 'cool' ? 'Frío' : result.undertone === 'warm' ? 'Cálido' : 'Neutro'}
-              </span>
-              <span className="rounded-full bg-white border border-line px-3.5 py-1.5 text-sm font-semibold text-ink">
-                Piel: {SKIN_LABEL[state.quiz.skin]}
-              </span>
-              <span className="rounded-full bg-white border border-line px-3.5 py-1.5 text-sm font-semibold text-ink">
-                Cobertura: {COVERAGE_LABEL[state.quiz.coverage]}
-              </span>
-            </div>
-          </div>
-          <Button variant="ghost" size="sm" onClick={() => goTo(2)}>
-            <Edit3 className="h-4 w-4" /> Editar respuestas
-          </Button>
+        <div className="flex items-center justify-between gap-3 mb-2">
+          <span className="text-[13px] font-semibold text-ink">Tu guía</span>
+          <button
+            type="button"
+            onClick={() => goTo(2)}
+            className="text-[12px] font-semibold text-rose underline"
+          >
+            Editar
+          </button>
         </div>
+        <p className="text-[14px] text-ink">
+          tono {result.tone.toLowerCase()} / subtono {result.undertone === 'cool' ? 'frío' : result.undertone === 'warm' ? 'cálido' : 'neutro'}
+        </p>
+        <p className="text-[13px] text-muted mt-1">
+          Piel {SKIN_LABEL[state.quiz.skin]?.toLowerCase()} · Venas: {state.quiz.veins} · Cobertura {COVERAGE_LABEL[state.quiz.coverage]?.toLowerCase()}
+        </p>
       </Card>
 
+      <p className="text-[12px] text-muted">
+        Kevin y Coco · Referencias indicadas por la marca. Colores y envases ilustrativos; sin tonos calibrados ni stock confirmado.
+      </p>
+
       {grouped.map(({ line, meta, items }) => (
-        <section key={line}>
-          <div className="flex items-end justify-between mb-3">
-            <div>
-              <h3 className="font-display text-xl text-ink">{meta.label}</h3>
-              <p className="text-[13px] text-muted">{meta.description}</p>
-            </div>
-            <span className="text-xs font-semibold text-rose bg-rose-light rounded-full px-3 py-1">
-              {items.length} referencias
+        <section key={line} className="space-y-3">
+          <div className="flex items-end justify-between">
+            <h3 className="font-display text-xl text-ink">{meta.label}</h3>
+            <span className="text-[12px] text-muted">
+              {items.map((p) => p.reference).join(' · ')}
             </span>
           </div>
           <div className="grid gap-3">
@@ -92,32 +96,54 @@ export default function CatalogStep() {
         </section>
       ))}
 
-      <Card tone="paper" className="p-5">
-        <p className="text-xs font-semibold text-rose uppercase tracking-wider mb-2">
-          Así se vería tu mensaje
+      <Card tone="blush" className="p-4 flex gap-3">
+        <Info className="h-5 w-5 text-rose shrink-0 mt-0.5" />
+        <p className="text-[13px] text-ink-soft">
+          Corrector, precorrector y contorno: catálogo pendiente. Se agregarán cuando estén disponibles.
         </p>
+      </Card>
+
+      {tipsOpen && (
+        <Card tone="paper" className="p-4">
+          <p className="text-[13px] font-semibold text-ink mb-1">Sugerencias para elegir mejor</p>
+          <ul className="text-[13px] text-ink-soft space-y-1">
+            <li>• Probá la base sobre la mandíbula con luz natural.</li>
+            <li>• Si el tono se funde con tu piel, es el tuyo.</li>
+            <li>• Confirmá antes de comprar; es una guía ilustrativa.</li>
+          </ul>
+        </Card>
+      )}
+
+      <Card tone="paper" className="p-5">
+        <div className="flex items-center justify-between mb-3">
+          <span className="text-[12px] font-semibold uppercase tracking-wider text-rose">Así se vería tu mensaje</span>
+          <MessageCircle className="h-4 w-4 text-rose" />
+        </div>
         <pre className="whitespace-pre-wrap text-[13px] leading-relaxed text-ink-soft font-body">
           {message}
         </pre>
       </Card>
 
-      <div className="flex flex-col sm:flex-row gap-3 items-center justify-between pt-2">
-        <Button variant="secondary" onClick={() => { /* keep */ goTo(3) }}>
-          <RotateCcw className="h-4 w-4" /> Nueva foto
+      <div className="flex flex-col gap-3">
+        <Button variant="secondary" size="lg" onClick={() => setTipsOpen((v) => !v)}>
+          <Lightbulb className="h-4 w-4" /> Sugerencias
         </Button>
         <a
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-all duration-200 bg-[#25D366] text-white hover:bg-[#1ebe57] shadow-soft h-14 px-6 text-base"
+          className="inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-all duration-200 bg-rose text-white hover:bg-rose-dark shadow-soft h-14 px-6 text-base"
         >
           <MessageCircle className="h-5 w-5" />
           Consultar por WhatsApp
         </a>
       </div>
 
-      <p className="text-[11px] text-muted text-center leading-relaxed">
-        Orientación visual basada en la foto. El tono final se confirma probando la base sobre tu piel. Tu foto no se envía.
+      <p className="text-[12px] text-muted text-center leading-relaxed">
+        La foto no se incluiría automáticamente. Podrás revisar el mensaje antes de enviarlo.
+      </p>
+      <p className="text-[12px] text-muted text-center leading-relaxed">
+        Recuerda: la cámara solo estima el tono; la luz y el dispositivo afectan el resultado. Confirma el color en tu piel.
       </p>
     </div>
   )
