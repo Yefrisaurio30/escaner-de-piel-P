@@ -1,0 +1,94 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #FDF8F5;
+  --color-paper-2: #FBF3EE;
+  --color-cream: #F7ECE3;
+  --color-blush: #F8E3E6;
+  --color-rose: #C22543;
+  --color-rose-2: #D82B50;
+  --color-rose-dark: #9E1A33;
+  --color-rose-light: #F8DDE2;
+  --color-ink: #2B2323;
+  --color-ink-soft: #4A3F3F;
+  --color-muted: #7A6B6B;
+  --color-line: #EADCD6;
+  --color-lavender: #B7A6E8;
+  --color-baby: #B9D8F2;
+  --color-butter: #F6DDA7;
+  --color-mint: #BEE9D8;
+  --color-skin-1: #E9C6A5;
+  --color-skin-2: #D9A97E;
+  --color-skin-3: #BD8355;
+  --color-skin-4: #96552F;
+
+  --font-display: "Fraunces Variable", "Fraunces", Georgia, serif;
+  --font-body: "DM Sans Variable", "DM Sans", system-ui, sans-serif;
+  --font-logo: "Baloo 2", "Baloo", cursive;
+
+  --radius-card: 1.75rem;
+  --radius-pill: 9999px;
+  --shadow-soft: 0 10px 30px -12px rgba(194, 37, 67, 0.18);
+  --shadow-card: 0 18px 40px -18px rgba(43, 35, 35, 0.18);
+
+  --animate-fade-up: fade-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-fade-in: fade-in 0.4s ease both;
+  --animate-pop: pop 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes pop {
+  0% { transform: scale(0.88); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes scan {
+  0% { top: -8%; }
+  100% { top: 108%; }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  background: radial-gradient(1200px 600px at 80% -10%, #F8DDE2 0%, transparent 60%),
+              radial-gradient(900px 500px at -10% 100%, #EDE2F7 0%, transparent 55%),
+              var(--color-paper);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+* { box-sizing: border-box; }
+button, a, input { font: inherit; }
+img, video { max-width: 100%; display: block; }
+:focus-visible {
+  outline: 2px solid var(--color-rose);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+@utility text-balance { text-wrap: balance; }
+@utility no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
