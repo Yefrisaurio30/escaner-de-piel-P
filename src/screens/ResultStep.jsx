@@ -4,7 +4,7 @@ import StepHeader from '../components/StepHeader'
 import Button from '../components/ui/Button'
 import Card from '../components/ui/Card'
 import Swatch from '../components/ui/Swatch'
-import { MatchDuo } from '../components/illustrations/PopIllustrations'
+import tuSeleccion from '../assets/tu-seleccion.jpeg'
 import { CATALOG } from '../data/catalog'
 import { UNDERTONE_LABEL } from '../data/quiz'
 import { undertoneLabel } from '../lib/whatsapp'
@@ -31,7 +31,11 @@ export default function ResultStep() {
       />
 
       <div className="rounded-[2rem] overflow-hidden bg-gradient-to-br from-cream to-blush border border-line/60 shadow-card">
-        <MatchDuo className="w-full h-auto" />
+        <img
+          src={tuSeleccion}
+          alt="Tu selección de tonos"
+          className="w-full h-auto mix-blend-multiply"
+        />
       </div>
 
       <Card tone="soft" className="p-5">

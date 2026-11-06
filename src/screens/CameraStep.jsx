@@ -4,7 +4,7 @@ import StepHeader from '../components/StepHeader'
 import Button from '../components/ui/Button'
 import Card from '../components/ui/Card'
 import { Camera, RefreshCw, ShieldCheck, Sun, Sparkles, Droplet } from 'lucide-react'
-import { ScanDuo } from '../components/illustrations/PopIllustrations'
+import frenteMejilla from '../assets/frente-mejilla.jpeg'
 import { captureVideoFrame, resizeDataUrl, loadImage } from '../lib/image'
 import { demoPortraitDataUrl } from '../lib/demoPhoto'
 
@@ -128,7 +128,11 @@ export default function CameraStep() {
       {mode === 'intro' && (
         <>
           <div className="relative rounded-[2rem] overflow-hidden bg-gradient-to-br from-blush to-cream border border-line/60 shadow-card">
-            <ScanDuo className="w-full h-auto" />
+            <img
+              src={frenteMejilla}
+              alt="Personajes mostrando mejilla y frente"
+              className="w-full h-auto mix-blend-multiply"
+            />
             <div className="absolute top-4 left-4 rounded-full bg-white/90 backdrop-blur px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-rose shadow-sm">
               FRENTE
             </div>

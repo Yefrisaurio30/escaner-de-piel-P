@@ -2,7 +2,7 @@ import { useApp } from '../../context/AppContext'
 import AppHeader from './AppHeader'
 import { STEPS } from '../../data/steps'
 import StepProgress from '../StepProgress'
-import BrandLogo from '../BrandLogo'
+import logo from '../../assets/logo.jpeg'
 
 export default function AppShell({ children }) {
   const { state, goTo } = useApp()
@@ -12,7 +12,7 @@ export default function AppShell({ children }) {
 
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 py-4 lg:py-8 flex-1 grid lg:grid-cols-[290px_1fr] gap-6 lg:gap-10">
         <aside className="hidden lg:flex flex-col gap-6 sticky top-8 self-start">
-          <BrandLogo size="md" />
+          <img src={logo} alt="Prisma Pop" className="h-20 w-auto mix-blend-multiply" />
           <div className="rounded-[var(--radius-card)] bg-white/80 border border-line/70 p-5 shadow-card">
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-rose mb-3">
               Tu pedido en 6 pasos

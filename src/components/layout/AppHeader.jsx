@@ -1,6 +1,6 @@
 import { Menu, X, ArrowLeft } from 'lucide-react'
 import { useApp } from '../../context/AppContext'
-import BrandLogo from '../BrandLogo'
+import logo from '../../assets/logo.jpeg'
 
 export default function AppHeader({ showBack = true, onBack }) {
   const { state, dispatch, goTo } = useApp()
@@ -20,7 +20,7 @@ export default function AppHeader({ showBack = true, onBack }) {
           ) : (
             <div className="h-10 w-10" />
           )}
-          <BrandLogo size="sm" />
+          <img src={logo} alt="Prisma Pop" className="h-12 w-auto rounded-xl mix-blend-multiply" />
         </div>
 
         <div className="hidden md:flex items-center gap-2 text-xs text-muted">

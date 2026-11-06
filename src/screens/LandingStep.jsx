@@ -3,7 +3,7 @@ import { useApp } from '../context/AppContext'
 import StepHeader from '../components/StepHeader'
 import Button from '../components/ui/Button'
 import Card from '../components/ui/Card'
-import { HeroDuo } from '../components/illustrations/PopIllustrations'
+import frenteMejilla from '../assets/frente-mejilla.jpeg'
 
 const steps = [
   { n: '01', title: 'Nos cuentas', text: 'Respondé 3 preguntas rápidas sobre tu piel.' },
@@ -22,7 +22,11 @@ export default function LandingStep() {
       />
 
       <div className="relative rounded-[2rem] overflow-hidden bg-gradient-to-br from-blush via-white to-cream border border-line/60 shadow-card">
-        <HeroDuo className="w-full h-auto" />
+        <img
+          src={frenteMejilla}
+          alt="Zonas de escaneo en mejilla y frente"
+          className="w-full h-auto rounded-[2rem] mix-blend-multiply"
+        />
         <div className="absolute top-4 left-4 rounded-full bg-white/90 backdrop-blur px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-rose shadow-sm">
           SCANEA AQUÍ · FRENTE
         </div>

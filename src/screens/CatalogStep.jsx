@@ -8,7 +8,7 @@ import { LINE_META } from '../data/catalog'
 import { SKIN_LABEL, COVERAGE_LABEL } from '../data/quiz'
 import { buildMessage, buildWhatsAppUrl } from '../lib/whatsapp'
 import { MessageCircle, Lightbulb, Info } from 'lucide-react'
-import { HeroDuo } from '../components/illustrations/PopIllustrations'
+import tuSeleccion from '../assets/tu-seleccion.jpeg'
 
 export default function CatalogStep() {
   const { state, goTo } = useApp()
@@ -45,7 +45,11 @@ export default function CatalogStep() {
   return (
     <div className="mx-auto max-w-xl space-y-6">
       <div className="rounded-[2rem] overflow-hidden bg-gradient-to-br from-blush to-cream border border-line/60 shadow-card">
-        <HeroDuo className="w-full h-auto" />
+        <img
+          src={tuSeleccion}
+          alt="Catálogo Prisma Pop"
+          className="w-full h-auto mix-blend-multiply"
+        />
         <p className="px-4 pb-3 text-[11px] text-muted text-center">
           La cámara estima el tono en mejilla y frente · Confirma el color sobre tu piel
         </p>

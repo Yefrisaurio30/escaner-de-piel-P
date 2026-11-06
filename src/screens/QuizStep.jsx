@@ -3,7 +3,7 @@ import { useApp } from '../context/AppContext'
 import StepHeader from '../components/StepHeader'
 import Button from '../components/ui/Button'
 import PillGroup from '../components/ui/PillGroup'
-import { HugDuo } from '../components/illustrations/PopIllustrations'
+import preguntas from '../assets/preguntas.jpeg'
 import {
   SKIN_OPTIONS,
   VEIN_OPTIONS,
@@ -20,7 +20,11 @@ export default function QuizStep() {
   return (
     <div className="mx-auto max-w-xl space-y-6">
       <div className="rounded-[2rem] overflow-hidden bg-gradient-to-br from-blush to-cream border border-line/60 shadow-card">
-        <HugDuo className="w-full h-auto" />
+        <img
+          src={preguntas}
+          alt="Respondé unas preguntas rápidas"
+          className="w-full h-auto mix-blend-multiply"
+        />
       </div>
 
       <StepHeader
