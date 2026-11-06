@@ -188,8 +188,8 @@ export function sampleRegion(ctx, x, y, radius, width, height) {
       const dx = (x0 + (i / 4) % w) - x
       const dy = (y0 + Math.floor((i / 4) / w)) - y
       if (Math.sqrt(dx * dx + dy * dy) > r) continue
-      const y = 0.299 * px.r + 0.587 * px.g + 0.114 * px.b
-      if (y <= 40) continue
+      const lum = 0.299 * px.r + 0.587 * px.g + 0.114 * px.b
+      if (lum <= 40) continue
       rs.push(px.r)
       gs.push(px.g)
       bs.push(px.b)
